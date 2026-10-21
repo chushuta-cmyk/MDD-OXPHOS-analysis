@@ -58,6 +58,13 @@ GO:0006119 is used in two annotation-derived versions:
 
 R 4.5.x; packages include limma/edgeR (voom, CAMERA, FRY), DESeq2, fgsea, singscore, clusterProfiler, org.Hs.eg.db (3.22.0 for gene-set queries), AnnotationDbi, data.table, ggplot2, sandwich/matrixStats. See `ARCHIVE_NOTES_2026-10-21.md` for outstanding environment-locking tasks.
 
+## License
+
+MIT License — see [`LICENSE`](LICENSE). The scripts and documentation in this
+repository are shared for method transparency and reproducibility. Participant-level
+data and raw GEO/GWAS inputs remain the property of their respective depositors;
+this release does not redistribute them.
+
 ## Integrity
 
 `SHA256SUMS.txt` at repository root records hashes of every file in this archive. Regenerate after any change:
@@ -69,7 +76,7 @@ find . -type f ! -name SHA256SUMS.txt -print0 | sort -z | xargs -0 shasum -a 256
 
 1. Scrub local absolute paths (`/Users/tan/...`, machine-specific `.libPaths`) → configurable `DATA_DIR` / `RESULTS_DIR` / `OUT`.
 2. Credential / personal-identifier scan (no tokens, no participant-level data).
-3. Confirm license before public release (archive currently ships without a license grant).
+3. License: MIT (see [`LICENSE`](LICENSE)) — confirm it matches your preference before public release.
 4. Exclude non-pipeline files (`.Rhistory`, `.DS_Store`) — already removed from this release.
 5. Regenerate `SHA256SUMS.txt`; verify before push.
 6. Recommended: Zenodo DOI for the final public snapshot.
