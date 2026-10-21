@@ -1,0 +1,12 @@
+# Working artifacts
+.DS_Store
+*.Rhistory
+~$*.docx
+*.tmp
+
+# Sensitive / restricted content — never commit
+# Raw GEO/GWAS downloads and participant-level matrices are access-only (see data/)
+# Scrub local absolute paths from scripts before publishing (see scripts/README.md)
+
+# Keep archive clean
+results/figures/*_composite_original.png
