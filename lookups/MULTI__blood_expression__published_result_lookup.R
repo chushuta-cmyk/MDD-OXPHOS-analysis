@@ -12,11 +12,17 @@
 
 suppressPackageStartupMessages(library(data.table))
 
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
 args <- commandArgs(trailingOnly = FALSE)
 script_arg <- sub("^--file=", "", args[grep("^--file=", args)])
 script_dir <- if (length(script_arg)) dirname(normalizePath(script_arg)) else getwd()
-repo_root <- normalizePath(file.path(script_dir, ".."))
-out_dir <- file.path(script_dir, "results")
+repo_root <- WORK_ROOT
+out_dir <- file.path(OUTPUT_ROOT, "lookups")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
 deg_98793_file <- file.path(repo_root, "transcriptomics/blood/GSE98793/results_fixed/GSE98793_all_DEG_results.csv")

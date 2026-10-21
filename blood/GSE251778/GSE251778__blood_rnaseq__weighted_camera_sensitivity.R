@@ -10,16 +10,22 @@ suppressPackageStartupMessages({
   library(org.Hs.eg.db)
 })
 
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
 # Force system path for v3.22.0
 sys_libs <- .libPaths()
-dev_path <- "/Users/tan/Developer/envs/R/lib/R/library"
+dev_path <- "<DEV_R_LIBRARY_PATH>"
 sys_libs_clean <- sys_libs[sys_libs != dev_path]
 .libPaths(sys_libs_clean)
 
 cat("org.Hs.eg.db version:", as.character(packageVersion("org.Hs.eg.db")), "\n")
 
-GSE_DIR <- "/Users/tan/Documents/MDD-MultiOmics/transcriptomics/blood/GSE251778"
-OUT_DIR <- "/Users/tan/Documents/Codex/2026-09-19/ple/outputs/manuscript_v6_12_optionB_2026-10-13/github_repository_draft/results/cross_cohort"
+GSE_DIR <- file.path(WORK_ROOT, "transcriptomics/blood/GSE251778")
+OUT_DIR <- file.path(OUTPUT_ROOT, "blood/GSE251778/cross_cohort_out")
 dir.create(OUT_DIR, showWarnings = FALSE, recursive = TRUE)
 
 # Step 1: Load counts and metadata

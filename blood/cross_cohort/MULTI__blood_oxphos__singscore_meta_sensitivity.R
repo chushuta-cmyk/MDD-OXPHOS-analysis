@@ -23,11 +23,14 @@ suppressPackageStartupMessages({
   library(pheatmap)
 })
 
-args <- commandArgs(trailingOnly = FALSE)
-script_arg <- sub("^--file=", "", args[grep("^--file=", args)])
-script_dir <- if (length(script_arg)) dirname(normalizePath(script_arg)) else getwd()
-repo_root <- normalizePath(file.path(script_dir, ".."))
-out_dir <- file.path(script_dir, "results_strict")
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+repo_root <- WORK_ROOT
+out_dir <- file.path(OUTPUT_ROOT, "cross_cohort/results_strict")
 fig_dir <- file.path(out_dir, "figures")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(fig_dir, recursive = TRUE, showWarnings = FALSE)
@@ -461,7 +464,7 @@ interaction_meta <- rbindlist(list(
 fwrite(interaction_meta, file.path(out_dir, "blood_OXPHOS_sex_interaction_meta.tsv"), sep = "\t")
 
 # Weighted signed-Z integration of the independent ranked-list GSEA results.
-rank_file <- file.path(script_dir, "results", "predefined_OXPHOS_across_transcriptomes.tsv")
+rank_file <- file.path(repo_root, "analysis_framework/results/predefined_OXPHOS_across_transcriptomes.tsv")
 rank_tab <- fread(rank_file)
 rank_ids <- c(GSE98793 = "GSE98793_blood", GSE39653 = "GSE39653_PBMC",
               GSE19738 = "GSE19738_blood", GSE251778 = "GSE251778_overall")
@@ -559,7 +562,7 @@ p_rank <- ggplot(rank_plot, aes(NES, reorder(Dataset, NES), color = Significant)
 ggsave(file.path(fig_dir, "Figure_OXPHOS_NES_all_transcriptomes.png"), p_rank,
        width = 9.2, height = 7.8, dpi = 320)
 
-core_detail <- fread(file.path(script_dir, "results", "blood_OXPHOS_core_gene_cross_dataset.tsv"))
+core_detail <- fread(file.path(repo_root, "analysis_framework/results/blood_OXPHOS_core_gene_cross_dataset.tsv"))
 heat_ids <- c("GSE98793_blood", "GSE39653_PBMC", "GSE19738_blood",
               "GSE19738_female", "GSE19738_male",
               "GSE251778_female", "GSE251778_male")

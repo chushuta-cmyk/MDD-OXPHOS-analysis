@@ -37,23 +37,29 @@ library(ReactomePA)
 library(enrichplot)
 library(RColorBrewer)
 
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
 # Data file candidates (edit paths as needed)
 count_candidates <- c(
   "GSE80655_raw_counts_GRCh38.p13_NCBI.tsv",
   "data/GSE80655_raw_counts_GRCh38.p13_NCBI.tsv",
-  "/Users/tan/Developer/projects/r_project/Study/Psychology_study/datasets/GSE80655_raw_counts_GRCh38.p13_NCBI.tsv"
+  file.path(DATA_ROOT, "Psychology_study/datasets/GSE80655_raw_counts_GRCh38.p13_NCBI.tsv")
 )
 series_candidates <- c(
   "GSE80655_series_matrix.txt",
   "data/GSE80655_series_matrix.txt",
-  "/Users/tan/Developer/projects/r_project/Study/Psychology_study/datasets/GSE80655_series_matrix.txt"
+  file.path(DATA_ROOT, "Psychology_study/datasets/GSE80655_series_matrix.txt")
 )
 metadata_candidates <- c(
   "data/GSE80655_metadata.csv",
-  "/Users/tan/Documents/MDD-MultiOmics/transcriptomics/brain/GSE80655/data/GSE80655_metadata.csv",
-  # Recovery path for the user's previous run, whose relative output directory
+  file.path(WORK_ROOT, "transcriptomics/brain/GSE80655/data/GSE80655_metadata.csv"),
+  # Recovery path for a previous run, whose relative output directory
   # accidentally placed this file under GSE53987.
-  "/Users/tan/Documents/MDD-MultiOmics/transcriptomics/brain/GSE53987/scripts/results_fixed/MOFA_inputs/GSE80655_metadata.rds"
+  file.path(WORK_ROOT, "transcriptomics/brain/GSE53987/scripts/results_fixed/MOFA_inputs/GSE80655_metadata.rds")
 )
 find_file <- function(candidates) {
   for (p in candidates) if (file.exists(p)) return(p)
@@ -62,8 +68,7 @@ find_file <- function(candidates) {
 count_file <- find_file(count_candidates)
 series_file <- if (any(file.exists(series_candidates))) find_file(series_candidates) else NULL
 
-project_root <- "/Users/tan/Documents/MDD-MultiOmics/transcriptomics"
-dataset_dir <- file.path(project_root, "brain/GSE80655")
+dataset_dir <- file.path(OUTPUT_ROOT, "brain/GSE80655")
 output_dir <- file.path(dataset_dir, "results_fixed")
 dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 

@@ -1,9 +1,14 @@
 """Correct Table 2 extraction; re-extract all candidates, never overwrite sources."""
-import csv, json, hashlib, gzip
+import csv, json, hashlib, gzip, sys
 from pathlib import Path
-OUT=Path('/Users/tan/Documents/Codex/2026-09-19/ple/outputs/step31_step4_audit_2026-10-04')
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    = "<DATA_ROOT>"
+WORK_ROOT    = "<WORK_ROOT>"
+ARCHIVE_ROOT = "<ARCHIVE_ROOT>"
+OUTPUT_ROOT  = "./output"
+OUT=Path(OUTPUT_ROOT)/'lookups'
 OUT.mkdir(parents=True,exist_ok=True)
-ROOT=Path('/Users/tan/Documents/MDD-MultiOmics/analysis_framework/GSE251780')
+ROOT=Path(WORK_ROOT)/'analysis_framework/GSE251780'
 SOURCE='https://www.nature.com/articles/s44220-025-00486-4/tables/2'
 # Complete Table 2, checked against publisher. Source coefficients are standardized,
 # local logFC is M-value difference: direction only; magnitudes must not be pooled.

@@ -3,7 +3,13 @@
 # Strict processed-data sensitivity for GSE251780/GSE251778 using EpiDISH
 # blood-cell estimates. Requires the outputs of script 15.
 
-repo_root <- normalizePath(getwd(), mustWork = TRUE)
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+repo_root <- WORK_ROOT
 source(file.path(repo_root, "analysis_framework", "_libpaths.R"))
 suppressPackageStartupMessages({
   library(data.table); library(limma); library(edgeR); library(EpiDISH)
@@ -14,8 +20,8 @@ set.seed(25178016)
 
 base_dir <- file.path(repo_root, "analysis_framework", "GSE251780")
 data_dir <- file.path(base_dir, "data")
-out_dir <- file.path(base_dir, "results")
-fig_dir <- file.path(base_dir, "figures")
+out_dir <- file.path(OUTPUT_ROOT, "methylation/GSE251780/results")
+fig_dir <- file.path(OUTPUT_ROOT, "methylation/GSE251780/figures")
 matrix_file <- file.path(data_dir,
   "GSE251780_Mokhtari_MatrixProcessed_AverageAndPvalue.txt.gz")
 metadata_file <- file.path(data_dir, "GSE251780_metadata.csv")

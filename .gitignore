@@ -10,3 +10,25 @@
 
 # Keep archive clean
 results/figures/*_composite_original.png
+
+# Round-1 run-through test artifacts — local archive only, not part of the GitHub snapshot
+scratch_test/
+TEST_REPORT_ROUND1.md
+RECONCILIATION_ROUND1.md
+
+# Local per-machine path/config files (superseded by placeholder paths; kept ignored)
+config.local.R
+config_local.py
+config.example.R
+config.example.py
+
+# Run outputs (relative OUTPUT_ROOT; never committed)
+output/
+
+# Integrity / archive documents retained only in the local archive
+SHA256SUMS.txt
+ARCHIVE_NOTES_2026-10-21.md
+
+# Python bytecode
+__pycache__/
+*.pyc

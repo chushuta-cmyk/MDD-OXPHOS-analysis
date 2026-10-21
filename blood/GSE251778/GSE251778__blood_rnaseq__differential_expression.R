@@ -18,12 +18,17 @@ suppressPackageStartupMessages({
   library(org.Hs.eg.db)
 })
 
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
 script_arg <- grep("^--file=", commandArgs(FALSE), value = TRUE)
 if (length(script_arg) != 1) stop("Run this file with Rscript.")
 script_file <- normalizePath(sub("^--file=", "", script_arg), mustWork = TRUE)
-dataset_dir <- normalizePath(file.path(dirname(script_file), ".."), mustWork = TRUE)
-data_dir <- file.path(dataset_dir, "data")
-output_dir <- file.path(dataset_dir, "results_fixed")
+data_dir <- file.path(WORK_ROOT, "transcriptomics/blood/GSE251778/data")
+output_dir <- file.path(OUTPUT_ROOT, "blood/GSE251778/results_fixed")
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
 count_file <- file.path(data_dir, "GSE251778_Mokhtari_rna_counts.csv.gz")

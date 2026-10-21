@@ -37,12 +37,18 @@ suppressPackageStartupMessages({
 # -------------------------------------------------------------------------------
 # SETTINGS
 # -------------------------------------------------------------------------------
-project_root <- "/Users/tan/Documents/MDD-MultiOmics/transcriptomics"
-output_dir   <- file.path(project_root, "methylation/GSE113725/results_fixed")
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+project_root <- file.path(WORK_ROOT, "transcriptomics")
+output_dir   <- file.path(OUTPUT_ROOT, "methylation/GSE113725/results_fixed")
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
-series_file <- "/Users/tan/Developer/projects/r_project/Study/GSE113725/GSE113725_series_matrix.txt"
-manifest_file <- "/Users/tan/Developer/projects/r_project/Study/GSE88890/GSE88890_RAW/GPL13534_HumanMethylation450_15017482_v.1.1.csv.gz"
+series_file <- file.path(DATA_ROOT, "GSE113725/GSE113725_series_matrix.txt")
+manifest_file <- file.path(DATA_ROOT, "GSE88890/GSE88890_RAW/GPL13534_HumanMethylation450_15017482_v.1.1.csv.gz")
 PADJ_CUTOFF <- 0.05
 
 # ==============================================================================
@@ -138,7 +144,7 @@ cat("\n===== MODULE 2: QC & PROBE FILTERING =====\n")
 #   BiocManager::install("IlluminaHumanMethylation450kanno.ilmn12.hg19")
 if (requireNamespace("IlluminaHumanMethylation450kanno.ilmn12.hg19", quietly = TRUE)) {
   suppressPackageStartupMessages(library(IlluminaHumanMethylation450kanno.ilmn12.hg19))
-  ann <- as.data.frame(IlluminaHumanMethylation450kanno.ilmn12.hg19)
+  ann <- as.data.frame(minfi::getAnnotation(IlluminaHumanMethylation450kanno.ilmn12.hg19))
   ann$Probe <- rownames(ann)
   cat(sprintf("  Annotation loaded: %d probes\n", nrow(ann)))
 } else if (file.exists(manifest_file)) {

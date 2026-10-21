@@ -36,13 +36,19 @@ suppressPackageStartupMessages({
 # -------------------------------------------------------------------------------
 # SETTINGS
 # -------------------------------------------------------------------------------
-project_root <- "/Users/tan/Documents/MDD-MultiOmics/transcriptomics"
-output_dir   <- file.path(project_root, "methylation/GSE88890/results_fixed")
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+project_root <- file.path(WORK_ROOT, "transcriptomics")
+output_dir   <- file.path(OUTPUT_ROOT, "methylation/GSE88890/results_fixed")
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
-series_file <- "/Users/tan/Developer/projects/r_project/Study/GSE88890/GSE88890_series_matrix.txt"
-beta_file   <- "/Users/tan/Developer/projects/r_project/Study/GSE88890/GSE88890_normalisedBetas.csv"
-manifest_file <- "/Users/tan/Developer/projects/r_project/Study/GSE88890/GSE88890_RAW/GPL13534_HumanMethylation450_15017482_v.1.1.csv.gz"
+series_file <- file.path(DATA_ROOT, "GSE88890/GSE88890_series_matrix.txt")
+beta_file   <- file.path(DATA_ROOT, "GSE88890/GSE88890_normalisedBetas.csv")
+manifest_file <- file.path(DATA_ROOT, "GSE88890/GSE88890_RAW/GPL13534_HumanMethylation450_15017482_v.1.1.csv.gz")
 
 PADJ_CUTOFF <- 0.05
 

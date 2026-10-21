@@ -8,10 +8,16 @@ suppressPackageStartupMessages({
   library(sandwich)
 })
 
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
 # Step 1: Load EPIC annotation from existing prepared_mapping.rds (no need to reload EPIC package)
-PROM_DIR <- "/Users/tan/Documents/Codex/2026-09-19/ple/outputs/secondary_planA_2026-10-05"
-GSE_DIR  <- "/Users/tan/Documents/MDD-MultiOmics/analysis_framework/GSE251780"
-OUT_DIR  <- file.path(PROM_DIR, "recalc_v322")
+PROM_DIR <- file.path(ARCHIVE_ROOT, "outputs/secondary_planA_2026-10-05")
+GSE_DIR  <- file.path(WORK_ROOT, "analysis_framework/GSE251780")
+OUT_DIR  <- file.path(OUTPUT_ROOT, "methylation/recalc_v322")
 dir.create(OUT_DIR, showWarnings = FALSE, recursive = TRUE)
 
 cat("=== Step 1: Load existing mapping and annotation ===\n")
@@ -24,7 +30,7 @@ cat("\n=== Step 2: Query GO:0006119 with v3.22.0 ===\n")
 # Force system path for org.Hs.eg.db
 sys_libs <- .libPaths()
 # Remove Developer path if present
-dev_path <- "/Users/tan/Developer/envs/R/lib/R/library"
+dev_path <- "<DEV_R_LIBRARY_PATH>"
 sys_libs_clean <- sys_libs[sys_libs != dev_path]
 .libPaths(sys_libs_clean)
 

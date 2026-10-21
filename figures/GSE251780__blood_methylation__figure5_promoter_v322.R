@@ -10,8 +10,14 @@ suppressPackageStartupMessages({
   library(ggplot2)
 })
 
-root <- "/Users/tan/Documents/Codex/2026-09-19/ple/outputs/manuscript_v6_12_optionB_2026-10-13"
-out_dir <- file.path(root, "github_repository_draft")
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+root <- file.path(ARCHIVE_ROOT, "outputs/manuscript_v6_12_optionB_2026-10-13")
+out_dir <- file.path(OUTPUT_ROOT, "fig_genetics/script1_v322_fig5")
 fig_dir <- file.path(out_dir, "figures")
 src_out <- file.path(out_dir, "figure_source_data")
 dir.create(fig_dir, recursive = TRUE, showWarnings = FALSE)

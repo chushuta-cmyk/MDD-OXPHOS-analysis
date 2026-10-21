@@ -28,12 +28,17 @@ library(edgeR)
 library(AnnotationDbi)
 library(hgu133plus2.db)
 
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
 # Data file candidates (edit paths as needed)
 data_candidates <- c(
   "data/GSE53987_series_matrix.txt",
   "./GSE53987_series_matrix.txt",
-  "/Users/tan/Developer/projects/r_project/Study/Psychology_study/datasets/GSE53987_series_matrix.txt",
-  "/Users/tan/mdd_multilayer/scripts/01_brain_transcriptomics/GSE53987/data/GSE53987_series_matrix.txt"
+  file.path(DATA_ROOT, "Psychology_study/datasets/GSE53987_series_matrix.txt")
 )
 find_file <- function(candidates) {
   for (p in candidates) if (file.exists(p)) return(p)
@@ -41,8 +46,7 @@ find_file <- function(candidates) {
 }
 file_path <- find_file(data_candidates)
 
-project_root <- "/Users/tan/Documents/MDD-MultiOmics/transcriptomics"
-output_dir <- file.path(project_root, "brain/GSE53987/results_fixed")
+output_dir <- file.path(OUTPUT_ROOT, "brain/GSE53987/results_fixed")
 dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 
 # Set to FALSE if the series matrix is already RMA-normalized (GEO default).

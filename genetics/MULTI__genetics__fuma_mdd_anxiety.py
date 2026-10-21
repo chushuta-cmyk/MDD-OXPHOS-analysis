@@ -12,6 +12,7 @@ from __future__ import annotations
 import configparser
 import json
 import math
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -21,12 +22,17 @@ import numpy as np
 import pandas as pd
 from scipy.stats import combine_pvalues, fisher_exact, hypergeom, norm, spearmanr
 
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    = "<DATA_ROOT>"
+WORK_ROOT    = "<WORK_ROOT>"
+ARCHIVE_ROOT = "<ARCHIVE_ROOT>"
+OUTPUT_ROOT  = "./output"
 
-ROOT = Path("/Users/tan/Documents/Codex/2026-09-19/ple")
+ROOT = Path(ARCHIVE_ROOT)
 MDD = ROOT / "work/fuma_compare_2026-09-23/mdd"
 ANX = ROOT / "work/fuma_compare_2026-09-23/anxiety_maf001"
 ANX_OLD = ROOT / "outputs/manuscript_v6_12_optionB_2026-10-13/github_repository_draft/results/archive/FUMA_legacy_archive_2026-10-21/work_results/ANX_job773201"
-OUT = ROOT / "outputs/FUMA_MDD_Anxiety_cross_trait_2026-09-23"
+OUT = Path(OUTPUT_ROOT) / "fig_genetics/script3_fuma_cross_trait"
 OUT.mkdir(parents=True, exist_ok=True)
 
 PALETTE = {

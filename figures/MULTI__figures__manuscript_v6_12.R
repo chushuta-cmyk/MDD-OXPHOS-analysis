@@ -8,8 +8,15 @@ suppressPackageStartupMessages({
   library(patchwork)
 })
 
-root <- "/Users/tan/Documents/Codex/2026-09-19/ple"
-out_dir <- file.path(root, "outputs/manuscript_v6_12_optionB_2026-10-13")
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+root <- ARCHIVE_ROOT
+real_out_dir <- file.path(root, "outputs/manuscript_v6_12_optionB_2026-10-13")
+out_dir <- file.path(OUTPUT_ROOT, "fig_genetics/script2_manuscript_v6_12")
 fig_dir <- file.path(out_dir, "figures")
 src_out <- file.path(out_dir, "figure_source_data")
 dir.create(fig_dir, recursive = TRUE, showWarnings = FALSE)
@@ -79,7 +86,7 @@ copy_source <- function(source, name) {
 }
 
 # Figure 1: uses the exact cohort table extracted from the v6.12 manuscript.
-cohorts <- read_tsv(file.path(src_out, "Figure1_design_source.tsv"))
+cohorts <- read_tsv(file.path(real_out_dir, "figure_source_data", "Figure1_design_source.tsv"))
 get_cohort <- function(id) {
   x <- cohorts[cohorts$Dataset == id, , drop = FALSE]
   if (nrow(x) != 1) stop("Expected one Table 1 row for ", id)

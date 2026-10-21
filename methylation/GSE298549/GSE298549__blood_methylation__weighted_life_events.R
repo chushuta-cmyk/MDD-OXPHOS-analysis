@@ -10,7 +10,13 @@
 # Optional DMR step (slower):
 #   RUN_DMR=true Rscript scripts/methylation/GSE298549__blood_methylation__weighted_life_events.R
 
-repo_root <- normalizePath(getwd(), mustWork = TRUE)
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+repo_root <- WORK_ROOT
 source(file.path(repo_root, "analysis_framework", "_libpaths.R"))
 
 suppressPackageStartupMessages({
@@ -29,9 +35,9 @@ suppressPackageStartupMessages({
 set.seed(298549)
 base_dir <- file.path(repo_root, "analysis_framework", "GSE201016")
 data_dir <- file.path(base_dir, "data")
-out_dir <- file.path(base_dir, "results")
-fig_dir <- file.path(base_dir, "figures")
-log_dir <- file.path(base_dir, "logs")
+out_dir <- file.path(OUTPUT_ROOT, "methylation/GSE298549/results")
+fig_dir <- file.path(OUTPUT_ROOT, "methylation/GSE298549/figures")
+log_dir <- file.path(OUTPUT_ROOT, "methylation/GSE298549/logs")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(fig_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(log_dir, recursive = TRUE, showWarnings = FALSE)

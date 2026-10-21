@@ -1,7 +1,13 @@
-.libPaths(c(.libPaths(), '/Users/tan/Developer/envs/R/lib/R/library'))
 suppressPackageStartupMessages({library(data.table);library(limma);library(sandwich);library(AnnotationDbi);library(org.Hs.eg.db);library(ggplot2)})
-root <- '/Users/tan/Documents/MDD-MultiOmics'
-out <- '/Users/tan/Documents/Codex/2026-09-19/ple/outputs/Claude_review_2026-09-30'
+
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+root <- WORK_ROOT
+out <- file.path(OUTPUT_ROOT,'cross_cohort/Claude_review_2026-09-30')
 dir.create(out,recursive=TRUE,showWarnings=FALSE)
 set.seed(20260930)
 sc <- fread(file.path(root,'analysis_framework/results_strict/blood_OXPHOS_sample_scores.tsv'))
@@ -50,7 +56,7 @@ labs<-c('GSE98793 whole blood','GSE39653 PBMC','GSE19738 whole blood','GSE251778
 fp<-data.table(Label=factor(labs,levels=rev(labs)),Beta=c(-.1259399,-.2776345,-.5380509,.106,-.243609552,-.147026804),Low=c(-.280,-.886,-1.002,-.173,-.824484207,-.548941974),High=c(.028,.331,-.074,.385,.337265102,.254888365))
 p1<-ggplot(fp,aes(Beta,Label))+geom_vline(xintercept=0,linetype=2,color='grey')+geom_errorbar(aes(xmin=Low,xmax=High),width=.12,orientation='y')+geom_point(color='#215b75',size=2.5)+theme_bw(base_size=11)+labs(title='Blood pathway scores and exploratory synthesis',x='Standardized pathway score difference with 95% CI\nMDD minus control',y=NULL)
 p2<-ggplot(br,aes(NES,reorder(Dataset,NES),color=BH_7_regions<.05))+geom_vline(xintercept=0,linetype=2,color='grey')+geom_point(size=3)+scale_color_manual(values=c('grey','#be4b38'))+theme_bw(base_size=11)+theme(legend.position='bottom')+labs(title='Exploratory brain OXPHOS ranks',color='BH q < 0.05 across seven regions',x='Normalized enrichment score',y=NULL)
-gz<-'/Users/tan/Documents/Codex/2026-09-19/ple/outputs/MDD_Anxiety_online_followup_2026-09-23/GWAS_results/01_结构层_FUMA_MAGMA/gene_level_cross_trait_all.tsv.gz'
+gz<-file.path(ARCHIVE_ROOT,'outputs/MDD_Anxiety_online_followup_2026-09-23/GWAS_results/01_结构层_FUMA_MAGMA/gene_level_cross_trait_all.tsv.gz')
 gt<-fread(gz);cut<--log10(.05/nrow(gt))
 p4<-ggplot(gt,aes(-log10(P_MDD),-log10(P_ANX)))+geom_point(alpha=.3,size=.5,color='#78909c')+geom_vline(xintercept=cut,linetype=2)+geom_hline(yintercept=cut,linetype=2)+geom_text(data=gt[SYMBOL%in%c('DCC','SORCS3','DRD2')],aes(label=SYMBOL),nudge_y=.3,size=3)+theme_bw(base_size=11)+labs(title='Shared gene associations are contextual evidence',x='MDD MAGMA gene -log10(P)',y='Anxiety MAGMA gene -log10(P)')
 for(nm in c('Figure1_scores','Figure2_brain','Figure4_MAGMA')){zz<-switch(nm,Figure1_scores=p1,Figure2_brain=p2,Figure4_MAGMA=p4);ggsave(file.path(out,paste0(nm,'.png')),zz,width=8,height=5.3,dpi=220);ggsave(file.path(out,paste0(nm,'.pdf')),zz,width=8,height=5.3)}

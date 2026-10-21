@@ -29,8 +29,14 @@ suppressPackageStartupMessages({
 # -------------------------------------------------------------------------------
 # SETTINGS
 # -------------------------------------------------------------------------------
-project_root <- "/Users/tan/Documents/MDD-MultiOmics/transcriptomics"
-output_dir   <- file.path(project_root, "blood/GSE39653/results_fixed")
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+project_root <- file.path(WORK_ROOT, "transcriptomics")
+output_dir   <- file.path(OUTPUT_ROOT, "blood/GSE39653/results_fixed")
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 PADJ_CUTOFF <- 0.05
 mcpcounter_genes_file <- file.path(project_root, "reference/MCPcounter/genes.txt")
@@ -45,9 +51,9 @@ cat("\n===== MODULE 1: DATA PREPARATION & QC =====\n")
 
 # --- 1.1 Locate input: series matrix OR manual RData OR cleaned rds -----------
 candidates <- c(
-  "/Users/tan/Developer/projects/r_project/Study/Psychology_study/GSE39653_blood_data_manual.RData",
-  "/Users/tan/Developer/projects/r_project/Study/Psychology_study/GSE39653_clean_data.rds",
-  "/Users/tan/Developer/projects/r_project/Study/GSE39653/GSE39653_series_matrix.txt"
+  file.path(DATA_ROOT, "Psychology_study/GSE39653_blood_data_manual.RData"),
+  file.path(DATA_ROOT, "Psychology_study/GSE39653_clean_data.rds"),
+  file.path(DATA_ROOT, "GSE39653/GSE39653_series_matrix.txt")
 )
 input_path <- candidates[file.exists(candidates)][1]
 cat("  Input:", ifelse(is.na(input_path), "NOT FOUND - edit path", input_path), "\n")

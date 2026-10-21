@@ -40,9 +40,15 @@ suppressPackageStartupMessages({
 # -------------------------------------------------------------------------------
 # SETTINGS (paths, thresholds)
 # -------------------------------------------------------------------------------
-project_root <- "/Users/tan/Documents/MDD-MultiOmics/transcriptomics"
-data_dir     <- "/Users/tan/Developer/projects/r_project/Study/GSE98793/GSE98793_analysis"
-output_dir   <- file.path(project_root, "blood/GSE98793/results_fixed")
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+project_root <- file.path(WORK_ROOT, "transcriptomics")
+data_dir     <- file.path(DATA_ROOT, "GSE98793/GSE98793_analysis")
+output_dir   <- file.path(OUTPUT_ROOT, "blood/GSE98793/results_fixed")
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
 PADJ_CUTOFF <- 0.05          # user policy: adj.P / padj < 0.05

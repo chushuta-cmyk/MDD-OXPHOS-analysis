@@ -1,7 +1,12 @@
-.libPaths(c('/Users/tan/Developer/envs/R/lib/R/library', .libPaths()))
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
 library(sandwich)
-out <- '/Users/tan/Documents/Codex/2026-09-19/ple/outputs/step31_step4_audit_2026-10-04'
-root <- '/Users/tan/Documents/MDD-MultiOmics/analysis_framework/GSE251780'
+out <- file.path(OUTPUT_ROOT, "lookups")
+root <- file.path(WORK_ROOT, "analysis_framework/GSE251780")
 x <- read.delim(file.path(out,'target15_processed_matrix.tsv'),check.names=FALSE)
 m <- read.csv(file.path(root,'data/GSE251780_metadata.csv'))
 c <- read.delim(file.path(root,'results/GSE251780_EpiDISH_cell_fractions.tsv'))

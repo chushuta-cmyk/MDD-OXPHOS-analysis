@@ -24,18 +24,26 @@ suppressPackageStartupMessages({
 # ------------------------------------------------------------------------------
 # MODULE 0: CONFIG
 # ------------------------------------------------------------------------------
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
 args <- commandArgs(trailingOnly = TRUE)
 script_arg <- grep("^--file=", commandArgs(FALSE), value = TRUE)
 if (length(script_arg) != 1) stop("Run this file with Rscript.")
 script_file <- normalizePath(sub("^--file=", "", script_arg), mustWork = TRUE)
-framework_dir <- dirname(script_file)
-dataset_dir <- file.path(framework_dir, "GSE19738")
-geo_dir <- if (length(args) >= 1) normalizePath(args[1], mustWork = TRUE) else
-  file.path(dataset_dir, "cache")
+dataset_dir <- file.path(OUTPUT_ROOT, "blood/GSE19738")
 unified_dir <- file.path(dataset_dir, "unified_tables")
 res_dir <- file.path(dataset_dir, "results")
 dir.create(unified_dir, showWarnings = FALSE, recursive = TRUE)
 dir.create(res_dir, showWarnings = FALSE, recursive = TRUE)
+# GEO cache: prefer a pre-downloaded copy in the author workspace; otherwise a
+# local cache under the output tree (GEOquery downloads it there if absent).
+geo_default <- file.path(WORK_ROOT, "analysis_framework/GSE19738/cache")
+if (!dir.exists(geo_default)) geo_default <- file.path(dataset_dir, "cache")
+geo_dir <- if (length(args) >= 1) normalizePath(args[1], mustWork = TRUE) else geo_default
 
 PADJ_CUTOFF <- 0.05
 

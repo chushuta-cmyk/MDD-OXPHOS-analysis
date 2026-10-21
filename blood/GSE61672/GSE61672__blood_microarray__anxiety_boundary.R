@@ -1,10 +1,16 @@
 #!/usr/bin/env Rscript
 
 # Independent anxiety-dimension validation of the pre-defined OXPHOS signal.
-# Run from the MDD-MultiOmics repository root:
-#   Rscript analysis_framework/12_GSE61672_anxiety_OXPHOS.R
+# Run from the repository root:
+#   Rscript blood/GSE61672/GSE61672__blood_microarray__anxiety_boundary.R
 
-repo_root <- normalizePath(getwd(), mustWork = TRUE)
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+repo_root <- WORK_ROOT
 source(file.path(repo_root, "analysis_framework", "_libpaths.R"))
 
 suppressPackageStartupMessages({
@@ -25,17 +31,17 @@ suppressPackageStartupMessages({
 
 set.seed(61672)
 
-base_dir <- file.path(repo_root, "analysis_framework", "GSE61672")
-data_dir <- file.path(base_dir, "data")
-out_dir <- file.path(base_dir, "results")
-fig_dir <- file.path(base_dir, "figures")
-log_dir <- file.path(base_dir, "logs")
+input_data_dir <- file.path(repo_root, "analysis_framework", "GSE61672/data")
+data_dir <- file.path(OUTPUT_ROOT, "blood/GSE61672/data")
+out_dir <- file.path(OUTPUT_ROOT, "blood/GSE61672/results")
+fig_dir <- file.path(OUTPUT_ROOT, "blood/GSE61672/figures")
+log_dir <- file.path(OUTPUT_ROOT, "blood/GSE61672/logs")
 dir.create(data_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(fig_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(log_dir, recursive = TRUE, showWarnings = FALSE)
 
-matrix_file <- file.path(data_dir, "GSE61672_series_matrix.txt.gz")
+matrix_file <- file.path(input_data_dir, "GSE61672_series_matrix.txt.gz")
 if (!file.exists(matrix_file)) {
   stop("Missing series matrix: ", matrix_file,
        "\nDownload it with analysis_framework/download_next_datasets.sh")

@@ -1,8 +1,14 @@
 #!/usr/bin/env Rscript
-.libPaths(c('/Users/tan/Developer/envs/R/lib/R/library',.libPaths()))
+.libPaths(c('<DEV_R_LIBRARY_PATH>',.libPaths()))
 suppressPackageStartupMessages({library(readxl);library(minfi);library(IlluminaHumanMethylationEPICanno.ilm10b4.hg19);library(org.Hs.eg.db);library(data.table);library(sandwich)})
-out<-'outputs/secondary_planA_2026-10-05';dir.create(out,recursive=TRUE,showWarnings=FALSE)
-root<-'/Users/tan/Documents/MDD-MultiOmics/analysis_framework/GSE251780'
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+out<-file.path(OUTPUT_ROOT,'methylation/secondary_planA_2026-10-05');dir.create(out,recursive=TRUE,showWarnings=FALSE)
+root<-file.path(WORK_ROOT,'analysis_framework/GSE251780')
 write_tsv<-function(x,f)fwrite(x,file.path(out,f),sep='\t',na='NA')
 mode<-commandArgs(TRUE)[1]
 if(mode=='prepare') {

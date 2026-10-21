@@ -7,6 +7,7 @@ import json
 import math
 import re
 import gzip
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -16,11 +17,16 @@ import numpy as np
 import pandas as pd
 from statsmodels.stats.multitest import multipletests
 
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    = "<DATA_ROOT>"
+WORK_ROOT    = "<WORK_ROOT>"
+ARCHIVE_ROOT = "<ARCHIVE_ROOT>"
+OUTPUT_ROOT  = "./output"
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(ARCHIVE_ROOT)
 ONLINE = ROOT / "outputs" / "MDD_Anxiety_online_followup_2026-09-23"
 FUMA = ROOT / "outputs" / "FUMA_MDD_Anxiety_cross_trait_2026-09-23"
-OUT = ROOT / "outputs" / "MDD_Anxiety_integrated_online_results_2026-09-23"
+OUT = Path(OUTPUT_ROOT) / "fig_genetics/script4_smr_twas_integrated"
 OUT.mkdir(parents=True, exist_ok=True)
 
 

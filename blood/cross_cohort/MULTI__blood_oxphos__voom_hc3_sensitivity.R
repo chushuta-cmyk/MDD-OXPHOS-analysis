@@ -9,11 +9,17 @@
 # =============================================================================
 suppressPackageStartupMessages({library(limma); library(edgeR)})
 
-OUT <- "/Users/tan/Documents/MDD-MultiOmics/analysis_framework/sensitivity_2026-10-04"
-STRICT <- "/Users/tan/Documents/MDD-MultiOmics/analysis_framework/results_strict"
-D98793 <- "/Users/tan/Documents/MDD-MultiOmics/transcriptomics/blood/GSE98793/results_fixed"
-D251778 <- "/Users/tan/Documents/MDD-MultiOmics/transcriptomics/blood/GSE251778"
-D251780 <- "/Users/tan/Documents/MDD-MultiOmics/analysis_framework/GSE251780"
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+OUT <- file.path(OUTPUT_ROOT, "cross_cohort/sensitivity_2026-10-04")
+STRICT <- file.path(WORK_ROOT, "analysis_framework/results_strict")
+D98793 <- file.path(WORK_ROOT, "transcriptomics/blood/GSE98793/results_fixed")
+D251778 <- file.path(WORK_ROOT, "transcriptomics/blood/GSE251778")
+D251780 <- file.path(WORK_ROOT, "analysis_framework/GSE251780")
 
 log <- file(file.path(OUT, "step3.1_run.log"), open = "wt")
 sink(log, split = TRUE)

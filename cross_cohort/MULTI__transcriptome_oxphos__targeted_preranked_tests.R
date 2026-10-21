@@ -8,11 +8,14 @@ suppressPackageStartupMessages({
   library(AnnotationDbi)
 })
 
-args <- commandArgs(trailingOnly = FALSE)
-script_arg <- sub("^--file=", "", args[grep("^--file=", args)])
-script_dir <- if (length(script_arg)) dirname(normalizePath(script_arg)) else getwd()
-repo_root <- normalizePath(file.path(script_dir, ".."))
-out_dir <- file.path(script_dir, "results")
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+repo_root <- WORK_ROOT
+out_dir <- file.path(OUTPUT_ROOT, "cross_cohort")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
 files <- c(

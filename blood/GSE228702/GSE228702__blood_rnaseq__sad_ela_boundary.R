@@ -6,9 +6,15 @@
 # for estimated cell counts; age and gender are additionally included here.
 #
 # Run from the repository root:
-#   Rscript analysis_framework/13_GSE228702_SAD_ELA_OXPHOS.R
+#   Rscript blood/GSE228702/GSE228702__blood_rnaseq__sad_ela_boundary.R
 
-repo_root <- normalizePath(getwd(), mustWork = TRUE)
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+repo_root <- WORK_ROOT
 source(file.path(repo_root, "analysis_framework", "_libpaths.R"))
 
 suppressPackageStartupMessages({
@@ -28,9 +34,9 @@ suppressPackageStartupMessages({
 set.seed(228702)
 base_dir <- file.path(repo_root, "analysis_framework", "GSE228702")
 data_dir <- file.path(base_dir, "data")
-out_dir <- file.path(base_dir, "results")
-fig_dir <- file.path(base_dir, "figures")
-log_dir <- file.path(base_dir, "logs")
+out_dir <- file.path(OUTPUT_ROOT, "blood/GSE228702/results")
+fig_dir <- file.path(OUTPUT_ROOT, "blood/GSE228702/figures")
+log_dir <- file.path(OUTPUT_ROOT, "blood/GSE228702/logs")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(fig_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(log_dir, recursive = TRUE, showWarnings = FALSE)
@@ -117,7 +123,7 @@ complete <- complete.cases(meta[, c("Group", "Age_z", "Gender")])
 meta_cc <- droplevels(meta[complete, , drop = FALSE])
 expr_score_cc <- expr[, rownames(meta_cc), drop = FALSE]
 expr_cc <- expr_model[, rownames(meta_cc), drop = FALSE]
-write.csv(meta_cc, file.path(data_dir, "GSE228702_metadata_parsed.csv"),
+write.csv(meta_cc, file.path(out_dir, "GSE228702_metadata_parsed.csv"),
           row.names = FALSE)
 
 # Four cell means make the marginal and interaction contrasts explicit.

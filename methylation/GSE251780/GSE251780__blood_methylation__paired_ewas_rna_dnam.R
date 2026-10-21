@@ -6,7 +6,13 @@
 # Run from repository root:
 #   Rscript analysis_framework/15_GSE251780_paired_methylation_RNA.R
 
-repo_root <- normalizePath(getwd(), mustWork = TRUE)
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+repo_root <- WORK_ROOT
 source(file.path(repo_root, "analysis_framework", "_libpaths.R"))
 
 suppressPackageStartupMessages({
@@ -26,9 +32,9 @@ suppressPackageStartupMessages({
 set.seed(251780)
 base_dir <- file.path(repo_root, "analysis_framework", "GSE251780")
 data_dir <- file.path(base_dir, "data")
-out_dir <- file.path(base_dir, "results")
-fig_dir <- file.path(base_dir, "figures")
-log_dir <- file.path(base_dir, "logs")
+out_dir <- file.path(OUTPUT_ROOT, "methylation/GSE251780/results")
+fig_dir <- file.path(OUTPUT_ROOT, "methylation/GSE251780/figures")
+log_dir <- file.path(OUTPUT_ROOT, "methylation/GSE251780/logs")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(fig_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(log_dir, recursive = TRUE, showWarnings = FALSE)

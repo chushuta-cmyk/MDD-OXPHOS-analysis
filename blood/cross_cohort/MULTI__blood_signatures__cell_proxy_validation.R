@@ -1,9 +1,15 @@
 options(warn=1)
-.libPaths(c('/Users/tan/Developer/envs/R/lib/R/library',.libPaths()))
 suppressPackageStartupMessages({library(limma);library(edgeR);library(org.Hs.eg.db);library(matrixStats);library(sandwich)})
-ROOT <- '/Users/tan/Documents/MDD-MultiOmics'
+
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+ROOT <- WORK_ROOT
 OLD <- file.path(ROOT,'analysis_framework/sensitivity_2026-10-04/erady_validation')
-OUT <- '/Users/tan/Documents/Codex/2026-09-19/ple/outputs/secondary_completion_2026-10-05/signatures'
+OUT <- file.path(OUTPUT_ROOT,'cross_cohort/signatures')
 dir.create(OUT,recursive=TRUE,showWarnings=FALSE)
 set.seed(20261005)
 gs <- read.delim(file.path(OLD,'gene_sets.tsv'))

@@ -34,11 +34,17 @@ library(ggplot2)
 library(AnnotationDbi)
 library(illuminaHumanv3.db)   # FIX: v3 db matches GPL6947 (HumanHT-12 V3.0)
 
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
 # Data file candidates (edit paths as needed)
 data_candidates <- c(
   "GSE54563_series_matrix.txt",
   "data/GSE54563_series_matrix.txt",
-  "/Users/tan/Developer/projects/r_project/Study/GSE54563/GSE54563_series_matrix.txt"
+  file.path(DATA_ROOT, "GSE54563/GSE54563_series_matrix.txt")
 )
 find_file <- function(candidates) {
   for (p in candidates) if (file.exists(p)) return(p)
@@ -46,8 +52,7 @@ find_file <- function(candidates) {
 }
 series_file <- find_file(data_candidates)
 
-project_root <- "/Users/tan/Documents/MDD-MultiOmics/transcriptomics"
-output_dir <- file.path(project_root, "brain/GSE54563/results_fixed")
+output_dir <- file.path(OUTPUT_ROOT, "brain/GSE54563/results_fixed")
 dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 
 # FIX: enrichment now uses adjusted P < 0.05 genes (was raw P < 0.05)

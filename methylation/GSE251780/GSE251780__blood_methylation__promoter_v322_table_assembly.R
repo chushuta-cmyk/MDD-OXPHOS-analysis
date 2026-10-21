@@ -16,9 +16,15 @@
 suppressPackageStartupMessages(library(utils))
 options(digits = 17)   # full-precision numeric output in write.table/format
 
-root    <- "/Users/tan/Documents/Codex/2026-09-19/ple/outputs/manuscript_v6_12_optionB_2026-10-13/github_repository_draft"
-v322dir <- "/Users/tan/Documents/Codex/2026-09-19/ple/outputs/secondary_planA_2026-10-05/recalc_v322"
-outdir  <- file.path(root, "results/by_cohort/GSE251780")
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+root    <- file.path(ARCHIVE_ROOT, "outputs/manuscript_v6_12_optionB_2026-10-13/github_repository_draft")
+v322dir <- file.path(OUTPUT_ROOT, "methylation/recalc_v322")
+outdir  <- file.path(OUTPUT_ROOT, "methylation/github_repo_GSE251780")
 
 read_tsv <- function(path) {
   read.delim(path, check.names = FALSE, stringsAsFactors = FALSE,

@@ -1,10 +1,16 @@
 options(warn=1)
-.libPaths(c('/Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library','/Users/tan/Developer/envs/R/lib/R/library',.libPaths()))
 suppressPackageStartupMessages({library(limma);library(edgeR);library(org.Hs.eg.db)})
-ROOT <- '/Users/tan/Documents/MDD-MultiOmics'
-OUT <- '/Users/tan/Documents/Codex/2026-09-19/ple/outputs/secondary_completion_2026-10-05/brain_boundary'
+
+# --- Path configuration: EDIT these placeholder roots for your machine ----------
+DATA_ROOT    <- "<DATA_ROOT>"      # raw GEO / supplementary files (see README "Inputs")
+WORK_ROOT    <- "<WORK_ROOT>"       # author analysis workspace (intermediate result tables)
+ARCHIVE_ROOT <- "<ARCHIVE_ROOT>"    # author manuscript output archive
+OUTPUT_ROOT  <- "./output"          # results are written here (relative to repository root)
+
+ROOT <- WORK_ROOT
+OUT <- file.path(OUTPUT_ROOT, "brain/brain_boundary")
 dir.create(OUT,recursive=TRUE,showWarnings=FALSE)
-genes <- unique(read.delim('outputs/Claude_review_2026-09-30/GO0006119_membership.tsv')$Gene)
+genes <- unique(read.delim(file.path(ARCHIVE_ROOT, "outputs/Claude_review_2026-09-30/GO0006119_membership.tsv"))$Gene)
 writeLines(genes,file.path(OUT,'frozen_GO0006119.txt'))
 results <- manifests <- samples <- failures <- sources <- list()
 read_src <- function(path,rds=TRUE) {
@@ -68,7 +74,7 @@ safe('GSE54563',{
  test(E,m,~Diagnosis+pair,'GSE54563','ACC','Brain_regions',note='Paired model; other postmortem covariates absent from saved metadata.')
 })
 safe('GSE80655',{
- path<-'/Users/tan/Developer/projects/r_project/Study/Psychology_study/datasets/GSE80655_raw_counts_GRCh38.p13_NCBI.tsv'
+ path<-file.path(DATA_ROOT, "Psychology_study/datasets/GSE80655_raw_counts_GRCh38.p13_NCBI.tsv")
  sources[[length(sources)+1]]<-data.frame(Path=path,Bytes=file.info(path)$size,MD5=unname(tools::md5sum(path)))
  E<-as.matrix(read.delim(path,row.names=1,check.names=FALSE));stopifnot(all(E>=0),all(E==round(E)))
  mp<-AnnotationDbi::mapIds(org.Hs.eg.db,keys=rownames(E),keytype='ENTREZID',column='SYMBOL',multiVals='first')
